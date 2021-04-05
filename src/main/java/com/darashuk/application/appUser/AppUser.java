@@ -22,14 +22,26 @@ public class AppUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
                     generator = "student_sequence")
     private Long id;
-    private String name;
-    private String username;
+    private String firstname;
+    private String lastname;
     private String password;
     private String email;
-    private Boolean locked;
-    private Boolean enable;
+    private Boolean locked = false;
+    private Boolean enabled = false;
     @Enumerated(value = EnumType.STRING)
     private AppUserRole appUserRole;
+
+    public AppUser(String firstname,
+                   String lastname,
+                   String password,
+                   String email,
+                   AppUserRole appUserRole) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+        this.email = email;
+        this.appUserRole = appUserRole;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -44,7 +56,14 @@ public class AppUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+    public String getEmail(){
+        return email;
     }
 
     @Override
@@ -64,6 +83,6 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enable;
+        return enabled;
     }
 }
